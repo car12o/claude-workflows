@@ -37,7 +37,7 @@ Filter to `.go` files only.
 
 ### 2. Launch Review
 
-Invoke the **go-reviewer** agent with:
+Use the **Task tool** with `subagent_type: "gopher:go-reviewer"` to delegate the review. Include in the task prompt:
 - The list of files to review
 - The diff content for context
 - Instruction to focus on the targeted scope (not the entire codebase)

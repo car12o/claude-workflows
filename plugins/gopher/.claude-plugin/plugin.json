@@ -1,7 +1,7 @@
 {
   "name": "gopher",
   "description": "Go 1.24+ development workflow with TDD, quality gates, and code review. Provides specialized agents, skills, and commands for professional Go development.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "car12o"
   }
