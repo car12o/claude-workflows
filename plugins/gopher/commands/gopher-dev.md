@@ -69,6 +69,7 @@ Invoke **go-implementer** with:
 - The task specification
 - The design doc (if exists)
 - Current codebase context
+- Blast radius file list from the design (if the task modifies types/interfaces)
 
 ### Step 2: Check Result
 
@@ -155,6 +156,7 @@ Present to the user:
 ## Error Recovery
 
 - **Implementer escalation**: pause, present options, wait for decision
+- **Compile failure after implementation**: return to implementer with specific errors and blast radius file list (max 2 retries), then escalate
 - **Quality gate failure**: return to implementer for fixes (max 2 retries)
 - **Race condition**: CRITICAL — escalate immediately
 - **Review failure**: create fix tasks, re-enter Phase 3

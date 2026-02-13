@@ -42,7 +42,13 @@ Because it's small, the go-designer produces an inline plan instead of a full de
 
 ### Tasks
 1. Add email validation function with sentinel errors
+   - Files to create: none
+   - Files to modify: internal/service/user.go, internal/service/user_test.go
+   - Blast radius: none
 2. Integrate validation into CreateUser flow
+   - Files to create: none
+   - Files to modify: internal/service/user.go, internal/service/user_test.go
+   - Blast radius: internal/handler/user.go (calls CreateUser)
 ```
 
 ### [STOP 1: Design Approval]
