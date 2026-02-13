@@ -41,7 +41,13 @@ Produce an inline plan directly in your response:
 
 ### Tasks
 1. [task with test spec]
+   - Files to create: [new files]
+   - Files to modify: [existing files, including tests]
+   - Blast radius: [files referencing modified types, or "none"]
 2. [task with test spec]
+   - Files to create: [new files]
+   - Files to modify: [existing files, including tests]
+   - Blast radius: [files referencing modified types, or "none"]
 ```
 
 ### Medium (3-5 files)
@@ -119,7 +125,10 @@ Proposed
 ## Tasks
 
 ### Task 1: [Name]
-**Files:** [list]
+**Files to create:** [new files]
+**Files to modify:** [existing files, including test files]
+**Blast radius:** [other files referencing modified types, or "none"]
+**Type changes:** [struct/interface/signature changes, or "none"]
 **Description:** [what to implement]
 **Test spec:**
 - [test case 1: input → expected output]
@@ -144,6 +153,8 @@ Proposed
 - Every task must include test specifications
 - Tasks should follow dependency order
 - Each task specifies which files are created/modified
+- Task specs MUST list ALL files — including test files and mock implementations
+- If modifying a struct, interface, or function signature, the task spec MUST include a **Blast radius** field listing every file that references the modified type
 - Tasks should produce a compilable, testable increment
 
 ## Rules
