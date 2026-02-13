@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-workflows",
+  "description": "A collection of Claude Code workflow plugins for software development",
+  "owner": {
+    "name": "car12o"
+  },
+  "plugins": [
+    {
+      "name": "gopher",
+      "description": "Go 1.24+ development workflow with TDD, quality gates, and code review. Provides specialized agents, skills, and commands for professional Go development.",
+      "version": "1.0.0",
+      "author": {
+        "name": "car12o"
+      },
+      "source": "plugins/gopher",
+      "category": "development",
+      "homepage": "https://github.com/car12o/claude-workflows"
+    }
+  ]
+}
