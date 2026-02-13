@@ -13,9 +13,9 @@
       "author": {
         "name": "car12o"
       },
-      "source": "plugins/gopher",
-      "category": "development",
-      "homepage": "https://github.com/car12o/claude-workflows"
+      "source": "./plugins/gopher",
+      "homepage": "https://github.com/car12o/claude-workflows",
+      "category": "development"
     }
   ]
 }
