@@ -13,15 +13,15 @@ A collection of Claude Code workflow plugins for software development.
 ```bash
 # Add the marketplace and install plugins from within a Claude session
 /plugin marketplace add car12o/claude-workflows
-/plugin install gopher
+/plugin install [plugin] # e.g. /plugin install gopher
 
 # Or from the command line
 claude plugin marketplace add car12o/claude-workflows
-claude plugin install gopher
+claude plugin install [plugin] # e.g. claude plugin install gopher
 
 # Or clone and install a specific plugin for development
 git clone https://github.com/car12o/claude-workflows.git
-claude --plugin-dir ./claude-workflows/plugins/gopher
+claude --plugin-dir ./claude-workflows/plugins/[plugin] # e.g. claude --plugin-dir ./claude-workflows/plugins/gopher
 ```
 
 ## Project Structure
