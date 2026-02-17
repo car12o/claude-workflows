@@ -1,6 +1,6 @@
-# Example: Small Feature with /gopher-dev
+# Example: Small Feature with /gopher-feat
 
-This walkthrough shows how `/gopher-dev` handles a small feature (1-2 files, single package).
+This walkthrough shows how `/gopher-feat` handles a small feature (1-2 files, single package).
 
 ## Scenario
 
@@ -9,7 +9,7 @@ You have a Go service and want to add input validation for user email addresses.
 ## Usage
 
 ```
-/gopher-dev Add email validation to the user service
+/gopher-feat Add email validation to the user service
 ```
 
 ## What Happens

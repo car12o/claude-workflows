@@ -102,7 +102,7 @@ go test -race -coverprofile=coverage.out ./...
 go tool cover -func=coverage.out
 ```
 
-Default coverage threshold: **80%** (configurable).
+Default coverage threshold: **80%** (configurable via `$GOPHER_COVERAGE_THRESHOLD`).
 
 **Common fixes:**
 - Test failure: fix logic or update test expectations

@@ -14,11 +14,12 @@ For each task:
 
 Before writing any code:
 
-1. **Read all files** listed in the task spec (including test files and existing implementations)
-2. **Impact analysis** — for any type being modified, run:
-   - `grep -rn "TypeName" --include="*.go" .` to find all references
+1. **Read the design** — if your task prompt references a design doc path (e.g., `docs/design/<feature-name>.md`), read it using the Read tool before proceeding
+2. **Read all files** listed in the task spec (including test files and existing implementations)
+3. **Impact analysis** — for any type being modified, use the Grep tool to find all references:
+   - Search for `TypeName` in `*.go` files to find all references
    - Search for `var _ Interface` compile-time checks, mock implementations, and constructor calls
-3. **Build change checklist:**
+4. **Build change checklist:**
    - Files to create
    - Files to modify
    - Blast radius files (files referencing modified types that may need updates)
@@ -77,8 +78,7 @@ After refactoring, verify nothing was missed:
 1. `go build ./...` — catches stale references and compile errors
 2. `go test -race ./...` — catches regressions across the full project
 3. **Blast radius check** — revisit every file from the DISCOVER checklist. Was each file updated as needed?
-4. **Grep verification** — for any modified type names or signatures, grep to confirm zero stale references:
-   - `grep -rn "OldSignature\|OldTypeName" --include="*.go" .`
+4. **Grep verification** — for any modified type names or signatures, use the Grep tool to confirm zero stale references (search for `OldSignature` or `OldTypeName` in `*.go` files)
 5. If ANY verification fails, fix it before reporting the task as complete
 
 ## Go 1.24+ Implementation Rules
@@ -153,6 +153,10 @@ Escalation format:
 2. [option B]
 **Recommendation:** [your suggestion]
 ```
+
+### Resuming After Escalation
+
+When you receive a task prompt that references a previous escalation decision, treat the decision as authoritative and proceed with the chosen option. Do not re-escalate the same issue.
 
 ## File Organization
 

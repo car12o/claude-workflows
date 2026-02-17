@@ -75,7 +75,7 @@ Evaluate for each requirement:
 
 ## Output Format
 
-Provide your analysis in this structure:
+Provide your analysis in this structure. **These section headers are a contract** — downstream agents (go-designer) parse them by name:
 
 ```
 ## Requirements Summary
@@ -84,11 +84,11 @@ Provide your analysis in this structure:
 ## Codebase Context
 [Relevant existing patterns and structure]
 
-## Scale: [small|medium|large]
+## Scale Determination: [small|medium|large]
 [Justification]
 
-## ADR Required: [yes|no]
-[If yes, list triggers]
+## ADR Triggers
+[List of triggers, or "none"]
 
 ## Go-Specific Considerations
 - Packages affected: [list]
@@ -101,6 +101,12 @@ Provide your analysis in this structure:
 ## Risks and Open Questions
 [Any uncertainties or decisions needed]
 ```
+
+## When to Use WebSearch
+
+- Checking dependency health or security advisories for external deps under consideration
+- Verifying Go 1.24+ feature availability for specific use cases
+- Looking up API documentation for unfamiliar packages in the codebase
 
 ## Rules
 

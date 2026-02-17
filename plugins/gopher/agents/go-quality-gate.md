@@ -35,9 +35,12 @@ If installation fails, skip and note in report.
 ### Gate 3: Dependencies (auto-fix)
 
 ```bash
+cp go.mod go.mod.bak
 go mod tidy
 go mod verify
 ```
+
+After `go mod tidy`, diff `go.mod` against the backup. If new dependencies were added, flag them in the report as a warning (they may not have been in the original design). Remove the backup after checking.
 
 ### Gate 4: Static Analysis
 
@@ -85,7 +88,13 @@ Check coverage:
 go tool cover -func=coverage.out | grep total
 ```
 
-Default threshold: **80%**. Use `$GOPHER_COVERAGE_THRESHOLD` if set.
+Determine the threshold:
+
+```bash
+echo ${GOPHER_COVERAGE_THRESHOLD:-80}
+```
+
+Parse the coverage percentage from `go tool cover -func` output and compare against the threshold value. Default is **80%**.
 
 If tests fail: read failures, fix code, re-run. Max 2 fix attempts.
 If race detected: **CRITICAL** — fix is mandatory, escalate if complex.

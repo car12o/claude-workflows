@@ -135,7 +135,7 @@ Always run with `-race` in CI: `go test -race ./...`
 
 ## Coverage
 
-Default threshold: **80%** (configurable). Commands:
+Default threshold: **80%** (configurable via `$GOPHER_COVERAGE_THRESHOLD`). Commands:
 
 ```bash
 go test -coverprofile=coverage.out ./...
