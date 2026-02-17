@@ -74,17 +74,43 @@ project/
 
 ## Steps
 
-### 1. Create Directory Structure
+### 1. Pre-flight Check
 
-Create directories based on the chosen layout.
+Check which files and directories from the chosen layout already exist. Track them — subsequent steps will **skip existing files** rather than overwriting them.
 
-### 2. Initialize Module
+### 2. Create Directory Structure
+
+Report: "Creating directory structure..."
+
+Create directories based on the chosen layout. Skip directories that already exist.
+
+### 3. Initialize Module
+
+Report: "Initializing Go module..."
+
+**Skip if `go.mod` already exists.**
 
 ```bash
 go mod init <module-path>
 ```
 
-Then edit `go.mod` to set Go 1.24:
+Then edit `go.mod` to set Go 1.24.
+
+For **standard** and **service** layouts, add tool directives:
+
+```
+module <module-path>
+
+go 1.24
+
+tool (
+    golang.org/x/tools/cmd/goimports
+    github.com/golangci/golangci-lint/cmd/golangci-lint
+    golang.org/x/vuln/cmd/govulncheck
+)
+```
+
+For **minimal**:
 
 ```
 module <module-path>
@@ -92,7 +118,9 @@ module <module-path>
 go 1.24
 ```
 
-### 3. Create main.go
+### 4. Create main.go
+
+**Skip if the target main.go already exists.**
 
 For **minimal**:
 
@@ -132,7 +160,11 @@ func main() {
 }
 ```
 
-### 4. Create main_test.go (minimal only)
+### 5. Create Test Files
+
+**Skip test files that already exist.**
+
+For **minimal** — create `main_test.go`:
 
 ```go
 package main
@@ -144,15 +176,51 @@ func TestMain(t *testing.T) {
 }
 ```
 
-### 5. Create Makefile
+For **standard** — create `cmd/server/main_test.go`:
+
+```go
+package main
+
+import "testing"
+
+func TestMain(t *testing.T) {
+	// TODO: add tests
+}
+```
+
+For **service** — create `cmd/api/main_test.go`:
+
+```go
+package main
+
+import "testing"
+
+func TestMain(t *testing.T) {
+	// TODO: add tests
+}
+```
+
+### 6. Create Makefile
+
+Report: "Generating Makefile and config files..."
+
+**Skip if `Makefile` already exists.**
 
 Generate a Makefile with targets: `build`, `test`, `lint`, `fmt`, `vet`, `tidy`, `coverage`, `run`, `clean`, `check`.
 
-### 6. Create .golangci.yml (standard and service)
+### 7. Create .golangci.yml (standard and service)
+
+**Skip if `.golangci.yml` already exists.**
 
 Generate a `.golangci.yml` with recommended linters enabled.
 
-### 7. Create Dockerfile (standard and service)
+### 8. Create Dockerfile (standard and service)
+
+**Skip if `Dockerfile` already exists.**
+
+Adjust the binary name and `cmd/` path based on the layout:
+- **standard**: binary `server`, path `./cmd/server`
+- **service**: binary `api`, path `./cmd/api`
 
 ```dockerfile
 FROM golang:1.24 AS builder
@@ -160,14 +228,16 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 go build -trimpath -o /bin/api ./cmd/api
+RUN CGO_ENABLED=0 go build -trimpath -o /bin/<binary> ./cmd/<binary>
 
 FROM gcr.io/distroless/static-debian12
-COPY --from=builder /bin/api /bin/api
-ENTRYPOINT ["/bin/api"]
+COPY --from=builder /bin/<binary> /bin/<binary>
+ENTRYPOINT ["/bin/<binary>"]
 ```
 
-### 8. Create README.md
+### 9. Create README.md
+
+**Skip if `README.md` already exists.**
 
 Generate a README with:
 - Project name (from module path)
@@ -175,23 +245,26 @@ Generate a README with:
 - Development commands (from Makefile)
 - Project structure explanation
 
-### 9. Finalize
+### 10. Finalize
 
 ```bash
 go mod tidy
 ```
 
-### 10. Report
+### 11. Report
 
 ```
-## Project Created
+## Project Scaffolded
 
 **Module:** <module-path>
 **Layout:** <layout>
 **Go version:** 1.24
 
-**Files created:**
-- [list of files]
+**Created:**
+- [list of newly created files]
+
+**Skipped (already existed):**
+- [list of skipped files, or "None" if all were created]
 
 **Next steps:**
 1. cd <project-dir>

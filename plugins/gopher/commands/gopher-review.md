@@ -35,6 +35,8 @@ git diff <base>...HEAD --name-only
 
 Filter to `.go` files only.
 
+**If no `.go` files are found** in the specified scope, report "No Go files to review" and suggest alternative scopes (e.g., `--staged`, `--diff main`, or specific file paths).
+
 ### 2. Launch Review
 
 Use the **Task tool** with `subagent_type: "gopher:go-reviewer"` to delegate the review. Include in the task prompt:
@@ -45,7 +47,7 @@ Use the **Task tool** with `subagent_type: "gopher:go-reviewer"` to delegate the
 ### 3. Present Results
 
 Show the review output with:
-- Verdict (PASS / NEEDS IMPROVEMENT)
+- Verdict (PASS / NEEDS IMPROVEMENT) — note: DESIGN VIOLATION is not applicable for quick reviews since there is no design doc
 - Issues grouped by severity (critical, major, minor, info)
 - Specific file:line references
 - Actionable recommendations
