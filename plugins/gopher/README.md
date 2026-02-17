@@ -20,12 +20,12 @@ claude --plugin-dir ./claude-workflows/plugins/gopher
 
 ## Commands
 
-### `/gopher-dev <feature description>`
+### `/gopher-feat <feature description>`
 
 Full development lifecycle: analysis, design, TDD implementation, quality gates, and code review.
 
 ```
-/gopher-dev Add user authentication with JWT tokens
+/gopher-feat Add user authentication with JWT tokens
 ```
 
 **Workflow:**
