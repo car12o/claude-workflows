@@ -14,12 +14,14 @@ $ARGUMENTS
 ## Workflow
 
 ```
-Phase 1: Analysis    → go-analyzer
-Phase 2: Design      → go-designer
+Phase 1: Analysis    → go-analyzer (requirements, scale, ADR triggers)
+Phase 2: Design      → go-designer (plan, tasks, interfaces)
          [STOP 1: Design approval]
 Phase 3: Implementation (per task, autonomous)
-         → go-implementer → go-quality-gate → git commit
-Phase 4: Review      → go-reviewer
+         → go-implementer (TDD red-green-refactor)
+         → go-quality-gate
+         → git commit
+Phase 4: Review      → go-reviewer (idioms, safety, design conformance)
          [STOP 2: Final approval]
 ```
 
