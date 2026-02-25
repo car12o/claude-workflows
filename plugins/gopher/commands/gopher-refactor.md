@@ -1,5 +1,5 @@
 ---
-description: "Refactor Go code with safety guarantees: analyze scope, ensure test coverage, apply changes, verify behavior preserved."
+description: "Refactor Go code with safety guarantees: analyze scope, plan approval, ensure test coverage, apply changes, verify behavior preserved."
 argument-hint: "<description of what to refactor>"
 ---
 
@@ -15,13 +15,14 @@ $ARGUMENTS
 
 ```
 Phase 1: Analysis    → go-analyzer (scope, coverage, risks)
+         [STOP 1: Plan approval]
 Phase 2: Safety Net  → go-implementer (add tests if needed)
          → go-quality-gate (verify tests pass)
 Phase 3: Refactor    → go-implementer (apply changes)
          → go-quality-gate (verify no regressions)
          → git commit
 Phase 4: Review      → go-reviewer (verify behavior preserved)
-         [STOP: Final approval]
+         [STOP 2: Final approval]
 ```
 
 ## Subagent Reference
@@ -48,7 +49,22 @@ The analyzer should return:
 
 **Capture the analysis output** for subsequent phases.
 
-**Proceed immediately to Phase 2.**
+### [STOP 1: Plan Approval]
+
+Present to the user:
+- Files targeted for refactoring
+- Current test coverage on target packages
+- Safety net decision (tests will be added or coverage is adequate)
+- Blast radius (files that import/reference the target code)
+- Risks (behavior changes, interface changes, breaking dependents)
+- Proposed approach (incremental steps if the refactoring is large)
+
+**Options:**
+1. **Approve** — proceed to Phase 2
+2. **Approve with modifications** — user lists changes; update the plan and proceed
+3. **Reject and re-analyze** — re-run Phase 1 with user feedback as additional context
+
+**Wait for user decision before proceeding.**
 
 ## Phase 2: Safety Net
 
@@ -109,7 +125,7 @@ Use the **Task tool** with `subagent_type: "gopher:go-reviewer"` to review all c
 - Instruction to verify behavior is preserved (no functional changes)
 - Instruction to check that all blast radius files were updated
 
-### [STOP: Final Approval]
+### [STOP 2: Final Approval]
 
 Present to the user:
 - Review verdict
@@ -125,11 +141,13 @@ Present to the user:
 ## Orchestrator Rules
 
 1. **Delegate via Task tool** — all file changes happen through subagents
-2. **Safety net first** — never refactor code without adequate test coverage
-3. **Preserve behavior** — refactoring must not change external behavior
-4. **Quality gates mandatory** — run after both safety net and refactoring phases
-5. **Commit separately** — safety net tests and refactoring get separate commits
-6. **Escalate honestly** — if something fails after retries, tell the user
+2. **Follow the flow** — do not skip phases
+3. **Stop at markers** — always wait for user decision at STOP points; present the defined options
+4. **Safety net first** — never refactor code without adequate test coverage
+5. **Preserve behavior** — refactoring must not change external behavior
+6. **Quality gates mandatory** — run after both safety net and refactoring phases
+7. **Commit separately** — safety net tests and refactoring get separate commits
+8. **Escalate honestly** — if something fails after retries, tell the user
 
 ## Error Recovery
 
